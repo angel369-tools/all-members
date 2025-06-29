@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 1rem;
+        max-width: 600px;
+        margin: auto;
+      }
+      textarea {
+        width: 100%;
+        height: 300px;
+        font-size: 1rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 1rem;
+        padding: 0.75rem;
+        font-size: 1rem;
+        width: 100%;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>メール本文貼り付けフォーム</h2>
+    <textarea id="mailText" placeholder="ここにメール本文を貼り付けてください"></textarea>
+    <button onclick="submitText()">送信</button>
+
+    <script>
+      function submitText() {
+        const text = document.getElementById('mailText').value;
+        if (!text.trim()) {
+          alert("空のまま送信できないだなっす！");
+          return;
+        }
+
+        google.script.run
+          .withSuccessHandler(() => alert("送信成功だなっす！"))
+          .withFailureHandler(e => alert("エラー：\n" + e.message))
+          .saveData(text);
+
+        document.getElementById('mailText').value = "";
+      }
+    </script>
+  </body>
+</html>
